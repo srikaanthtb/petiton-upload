@@ -46,7 +46,12 @@ payload = {
 response = requests.post("https://api.openai.com/v1/chat/completions",headers=headers, json=payload)
 
 print(response.json())
-
+try:
+    response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+    print(response.json())
+except json.decoder.JSONDecodeError as e:
+    print(f"JSONDecodeError: {e}")
+    print(f"Response content: {response.content}")
 csv_data = response.json()['choices'][0]['message']['content']
 
 # Now write the CSV data to a file
